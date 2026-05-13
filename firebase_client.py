@@ -67,7 +67,7 @@ def fetch_events(days: int = 30) -> list[dict]:
 
     snap = (
         db.collection("userEvents")
-        .where("timestamp", ">=", cutoff)
+        .where(filter=firestore.FieldFilter("timestamp", ">=", cutoff))
         .order_by("timestamp")
         .get()
     )
@@ -101,7 +101,7 @@ def fetch_products(limit: int = 2000) -> list[dict]:
     db = get_db()
     snap = (
         db.collection("products")
-        .where("status", "==", "approved")
+        .where(filter=firestore.FieldFilter("status", "==", "approved"))
         .limit(limit)
         .get()
     )
